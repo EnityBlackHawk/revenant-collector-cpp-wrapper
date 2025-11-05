@@ -1,0 +1,49 @@
+cmake_minimum_required(VERSION 3.30)
+set(CMAKE_CXX_STANDARD 20)
+project(revenant-collector-cpp-wrapper)
+
+include(FetchContent)
+FetchContent_Declare(
+        Corrosion
+        GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+        GIT_TAG v0.5 # Optionally specify a commit hash, version tag or branch here
+)
+FetchContent_MakeAvailable(Corrosion)
+corrosion_import_crate(MANIFEST_PATH ../revenant-collector/Cargo.toml CRATE_TYPES staticlib)
+
+add_library(${CMAKE_PROJECT_NAME} SHARED)
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+
+target_include_directories(${CMAKE_PROJECT_NAME}
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/extern>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_sources(${CMAKE_PROJECT_NAME}
+
+    PUBLIC
+        FILE_SET HEADERS
+        FILES
+        include/revenant/revenant-collector.hpp
+
+    PRIVATE
+        extern/revenant-external.h
+        src/revenant-collector.cpp
+)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
+
+include(GNUInstallDirs)
+#install(TARGETS ${CMAKE_PROJECT_NAME} EXPORT ReventCollectorTargets)
+#install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(TARGETS ${CMAKE_PROJECT_NAME}
+        EXPORT ReventCollectorTargets
+        FILE_SET HEADERS DESTINATION include
+)
+install(EXPORT ReventCollectorTargets
+        FILE ReventCollectorConfig.cmake
+        NAMESPACE ReventCollector::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ReventCollector
+)
