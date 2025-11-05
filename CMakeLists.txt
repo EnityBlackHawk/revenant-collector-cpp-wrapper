@@ -9,6 +9,7 @@ FetchContent_Declare(
         GIT_TAG v0.5 # Optionally specify a commit hash, version tag or branch here
 )
 FetchContent_MakeAvailable(Corrosion)
+#TODO Add variable to define dynamically or fetch from repo
 corrosion_import_crate(MANIFEST_PATH ../revenant-collector/Cargo.toml CRATE_TYPES staticlib)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED)
@@ -36,8 +37,6 @@ target_sources(${CMAKE_PROJECT_NAME}
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
 
 include(GNUInstallDirs)
-#install(TARGETS ${CMAKE_PROJECT_NAME} EXPORT ReventCollectorTargets)
-#install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(TARGETS ${CMAKE_PROJECT_NAME}
         EXPORT ReventCollectorTargets
         FILE_SET HEADERS DESTINATION include
