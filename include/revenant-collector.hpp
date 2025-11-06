@@ -1,11 +1,9 @@
 #pragma once
-#include <csignal>
 #include <vector>
 
+namespace Revenant {
 
-namespace Revent {
-
-    using SigType = decltype(SIGINT);
+    using SigType = int;
 
     bool setupSignalHandlers(const std::vector<SigType>& signals);
     bool setupSignalHandler(const SigType& signal);
