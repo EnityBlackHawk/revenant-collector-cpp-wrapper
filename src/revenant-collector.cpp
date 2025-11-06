@@ -4,7 +4,7 @@
 
 bool Revent::setupSignalHandlers(const std::vector<SigType>& signals)
 {
-    return std::ranges::all_of(signals.cbegin(), signals.cend(), [](SigType sig)
+    return std::all_of(signals.cbegin(), signals.cend(), [](SigType sig)
     {
        return setup_one_signal_handler(sig);
     });
