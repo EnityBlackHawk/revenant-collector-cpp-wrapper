@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 set(CMAKE_CXX_STANDARD 20)
-project(revenant-collector-cpp-wrapper)
+project(RevenantCollectorCpp)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -16,6 +16,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 target_include_directories(${CMAKE_PROJECT_NAME}
+
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/extern>
@@ -26,8 +27,9 @@ target_sources(${CMAKE_PROJECT_NAME}
 
     PUBLIC
         FILE_SET HEADERS
+        BASE_DIRS include
         FILES
-        include/revenant/revenant-collector.hpp
+        include/revenant-collector.hpp
 
     PRIVATE
         extern/revenant-external.h
@@ -38,11 +40,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
 
 include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}
-        EXPORT ReventCollectorTargets
-        FILE_SET HEADERS DESTINATION include
+        EXPORT RevenantCollectorCppTargets
+        FILE_SET HEADERS
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/revenant
 )
-install(EXPORT ReventCollectorTargets
-        FILE ReventCollectorConfig.cmake
-        NAMESPACE ReventCollector::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ReventCollector
+install(EXPORT RevenantCollectorCppTargets
+        FILE RevenantCollectorCppConfig.cmake
+        NAMESPACE RevenantCollectorCpp::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/RevenantCollectorCpp
 )

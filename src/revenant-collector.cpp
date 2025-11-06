@@ -1,4 +1,4 @@
-#include "revenant/revenant-collector.hpp"
+#include <revenant-collector.hpp>
 #include <algorithm>
 #include "revenant-external.h"
 
