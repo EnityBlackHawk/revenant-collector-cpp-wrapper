@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.30)
 set(CMAKE_CXX_STANDARD 11)
+
+option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector")
+
 project(RevenantCollectorCpp)
 
 include(FetchContent)
@@ -9,8 +12,25 @@ FetchContent_Declare(
         GIT_TAG v0.5 # Optionally specify a commit hash, version tag or branch here
 )
 FetchContent_MakeAvailable(Corrosion)
-#TODO Add variable to define dynamically or fetch from repo
-corrosion_import_crate(MANIFEST_PATH ../revenant-collector/Cargo.toml CRATE_TYPES staticlib)
+
+
+if(REVENANT_COLLECTOR_RUST_PATH)
+    message("Using revenant-collector from path: ${REVENANT_COLLECTOR_RUST_PATH}")
+    corrosion_import_crate(MANIFEST_PATH "${REVENANT_COLLECTOR_RUST_PATH}/Cargo.toml" CRATE_TYPES staticlib)
+
+else ()
+    FetchContent_Declare(
+            revenant_collector_project
+            GIT_REPOSITORY https://github.com/EnityBlackHawk/revenant-collector.git
+            GIT_TAG master
+    )
+    FetchContent_MakeAvailable(revenant_collector_project)
+    corrosion_import_crate(
+            MANIFEST_PATH "${revenant_collector_project_SOURCE_DIR}/Cargo.toml"
+            CRATE_TYPES staticlib
+            DEPENDS revenant_collector_project
+    )
+endif ()
 
 add_library(${CMAKE_PROJECT_NAME} SHARED)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
