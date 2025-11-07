@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "revenant-external.h"
 
-bool Revent::setupSignalHandlers(const std::vector<SigType>& signals)
+bool Revenant::setupSignalHandlers(const std::vector<SigType>& signals)
 {
     return std::all_of(signals.cbegin(), signals.cend(), [](SigType sig)
     {
@@ -10,7 +10,7 @@ bool Revent::setupSignalHandlers(const std::vector<SigType>& signals)
     });
 }
 
-bool Revent::setupSignalHandler(const SigType& signal)
+bool Revenant::setupSignalHandler(const SigType& signal)
 {
     return setup_one_signal_handler(signal);
 }
