@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <descriptors.h>
 
 namespace Revenant {
 
@@ -7,5 +8,6 @@ namespace Revenant {
 
     bool setupSignalHandlers(const std::vector<SigType>& signals);
     bool setupSignalHandler(const SigType& signal);
+    void snapshot(DumpConfigDesc);
 
 }

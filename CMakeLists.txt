@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 set(CMAKE_CXX_STANDARD 11)
 
-option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector")
+option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector" "")
 
 project(RevenantCollectorCpp)
 
@@ -50,10 +50,13 @@ target_sources(${CMAKE_PROJECT_NAME}
         BASE_DIRS include
         FILES
         include/revenant-collector.hpp
+        include/RVector.h
+        include/descriptors.h
 
     PRIVATE
         extern/revenant-external.h
         src/revenant-collector.cpp
+        src/RVector.cpp
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)

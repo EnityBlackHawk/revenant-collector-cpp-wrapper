@@ -6,11 +6,16 @@ bool Revenant::setupSignalHandlers(const std::vector<SigType>& signals)
 {
     return std::all_of(signals.cbegin(), signals.cend(), [](SigType sig)
     {
-       return setup_one_signal_handler(sig);
+       return External::setup_one_signal_handler(sig);
     });
 }
 
 bool Revenant::setupSignalHandler(const SigType& signal)
 {
-    return setup_one_signal_handler(signal);
+    return External::setup_one_signal_handler(signal);
+}
+
+void Revenant::snapshot(DumpConfigDesc desc)
+{
+    return External::snapshot(desc);
 }
