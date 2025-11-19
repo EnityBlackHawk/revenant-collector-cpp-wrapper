@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <descriptors.h>
+#include "DumpConfigDesc.h"
 
 namespace Revenant {
 

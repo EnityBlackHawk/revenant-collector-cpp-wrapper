@@ -51,12 +51,17 @@ target_sources(${CMAKE_PROJECT_NAME}
         FILES
         include/revenant-collector.hpp
         include/RVector.h
-        include/descriptors.h
+        include/UserDataType.h
+        include/DumpConfigDesc.h
+        include/UserDataDesc.h
 
     PRIVATE
         extern/revenant-external.h
+        extern/descriptors.h
         src/revenant-collector.cpp
         src/RVector.cpp
+        src/DumpConfigDesc.cpp
+        src/UserDataDesc.cpp
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)

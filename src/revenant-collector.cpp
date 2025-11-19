@@ -17,5 +17,5 @@ bool Revenant::setupSignalHandler(const SigType& signal)
 
 void Revenant::snapshot(DumpConfigDesc desc)
 {
-    return External::snapshot(desc);
+    //return External::snapshot(desc);
 }

@@ -2,9 +2,20 @@
 #define REVENANTCOLLECTORCPP_RVECTOR_H
 #include <vector>
 
-template<typename T>
-class RVector : public std::vector<T>
-{};
+namespace Revenant
+{
+    template<typename T>
+    class RVector
+    {
+    public:
+        RVector(std::initializer_list<T> list);
+
+    private:
+        T* data;
+        std::size_t size;
+
+    };
+}
 
 
 #endif //REVENANTCOLLECTORCPP_RVECTOR_H
