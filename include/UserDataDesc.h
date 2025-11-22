@@ -12,7 +12,4 @@ namespace Revenant
     };
 
 }
-
-
-
 #endif //REVENANTCOLLECTORCPP_USERDATADESC_H

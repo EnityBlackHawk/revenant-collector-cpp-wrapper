@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
 option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector" "")
 
@@ -54,17 +54,21 @@ target_sources(${CMAKE_PROJECT_NAME}
         include/UserDataType.h
         include/DumpConfigDesc.h
         include/UserDataDesc.h
+        include/RVectorBase.h
 
-    PRIVATE
+        PRIVATE
         extern/revenant-external.h
         extern/descriptors.h
         src/revenant-collector.cpp
+        src/RVectorBase.cpp
         src/RVector.cpp
         src/DumpConfigDesc.cpp
         src/UserDataDesc.cpp
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
+
+add_subdirectory(test)
 
 include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}

@@ -10,9 +10,14 @@ bool Revenant::setupSignalHandlers(const std::vector<SigType>& signals)
     });
 }
 
-bool Revenant::setupSignalHandler(const SigType& signal)
+bool Revenant::setupSignalHandler(const SigType& sig)
 {
-    return External::setup_one_signal_handler(signal);
+    return External::setup_one_signal_handler(sig);
+}
+
+void Revenant::printStacktrace()
+{
+    return External::print_stacktrace();
 }
 
 void Revenant::snapshot(DumpConfigDesc desc)
