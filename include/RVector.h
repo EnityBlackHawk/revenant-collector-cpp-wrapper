@@ -1,7 +1,6 @@
 #ifndef REVENANTCOLLECTORCPP_RVECTOR_H
 #define REVENANTCOLLECTORCPP_RVECTOR_H
 #include <cstring>
-#include <memory>
 #include <vector>
 #include "RVectorBase.h"
 

@@ -11,12 +11,12 @@ namespace Revenant
 
     };
 
-    RVectorBase::RVectorBase() : _impl(nullptr)
-    {}
+    RVectorBase::RVectorBase() = default;
+    RVectorBase::~RVectorBase() = default;
 
     void RVectorBase::initialize(char*& data, const std::size_t typeSize, const std::size_t size)
     {
-        _impl = new Impl();
+        _impl = std::make_unique<Impl>();
         _impl->_data.data = data;
         _impl->_data.size = size;
         _impl->_unitSize = typeSize;

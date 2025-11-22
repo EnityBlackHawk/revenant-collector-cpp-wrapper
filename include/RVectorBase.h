@@ -9,11 +9,12 @@ namespace Revenant
     protected:
         struct Impl;
         RVectorBase();
+        ~RVectorBase();
         void initialize(char*& data, std::size_t typeSize, std::size_t size);
         [[nodiscard]] const char* get(int index) const;
 
     private:
-        Impl* _impl;
+        std::unique_ptr<Impl> _impl;
 
     };
 }
