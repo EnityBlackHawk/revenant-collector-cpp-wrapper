@@ -1,6 +1,7 @@
 #ifndef REVENANTCOLLECTORCPP_DESCRIPTORS_H
 #define REVENANTCOLLECTORCPP_DESCRIPTORS_H
 #include "UserDataType.h"
+#include <cstring>
 
 using namespace Revenant;
 

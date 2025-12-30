@@ -7,7 +7,7 @@
 namespace Revenant
 {
     template<typename T>
-    class RVector : RVectorBase
+    class RVector : public RVectorBase
     {
     public:
         RVector(std::initializer_list<T> list)

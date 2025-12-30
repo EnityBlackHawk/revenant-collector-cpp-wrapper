@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.30)
 set(CMAKE_CXX_STANDARD 20)
 
 option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector" "")
+option(REVENANT_ENABLE_TESTS "Enable tests for RevenantCollectorCpp" ON)
 
 project(RevenantCollectorCpp)
 
@@ -64,11 +65,15 @@ target_sources(${CMAKE_PROJECT_NAME}
         src/RVector.cpp
         src/DumpConfigDesc.cpp
         src/UserDataDesc.cpp
+        src/FFIExtractor.cpp
 )
-
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
 
-add_subdirectory(test)
+if(REVENANT_ENABLE_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
 
 include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}

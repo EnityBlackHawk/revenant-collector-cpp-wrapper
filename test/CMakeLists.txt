@@ -8,12 +8,18 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable("${CMAKE_PROJECT_NAME}-test"
     rvector.cpp
+    dumpconfigdesc.cpp
 )
 
 target_link_libraries("${CMAKE_PROJECT_NAME}-test"
     PRIVATE
         GTest::gtest_main
         ${CMAKE_PROJECT_NAME}
+)
+
+target_include_directories("${CMAKE_PROJECT_NAME}-test"
+    PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/../private"
 )
 
 include(GoogleTest)
