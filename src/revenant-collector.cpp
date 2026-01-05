@@ -1,7 +1,6 @@
 #include <revenant-collector.hpp>
 #include <algorithm>
 #include "revenant-external.h"
-#include "FFIExtractor.h"
 
 bool Revenant::setupSignalHandlers(const std::vector<SigType>& signals)
 {
@@ -19,9 +18,4 @@ bool Revenant::setupSignalHandler(const SigType& sig)
 void Revenant::printStacktrace()
 {
     return External::print_stacktrace();
-}
-
-void Revenant::snapshot(DumpConfigDesc desc)
-{
-    //External::snapshot(desc);
 }

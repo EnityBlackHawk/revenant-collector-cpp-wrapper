@@ -7,8 +7,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable("${CMAKE_PROJECT_NAME}-test"
-    rvector.cpp
-    dumpconfigdesc.cpp
+        stacktrace.cpp
 )
 
 target_link_libraries("${CMAKE_PROJECT_NAME}-test"

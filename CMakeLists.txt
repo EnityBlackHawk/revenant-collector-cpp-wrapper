@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 set(CMAKE_CXX_STANDARD 20)
 
-option(REVENANT_COLLECTOR_RUST_PATH "Path to the Rust crate revenant-collector" "")
 option(REVENANT_ENABLE_TESTS "Enable tests for RevenantCollectorCpp" ON)
 
 project(RevenantCollectorCpp)
@@ -15,23 +14,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Corrosion)
 
 
-if(REVENANT_COLLECTOR_RUST_PATH)
-    message("Using revenant-collector from path: ${REVENANT_COLLECTOR_RUST_PATH}")
-    corrosion_import_crate(MANIFEST_PATH "${REVENANT_COLLECTOR_RUST_PATH}/Cargo.toml" CRATE_TYPES staticlib)
+corrosion_import_crate(MANIFEST_PATH "rust/Cargo.toml" CRATE_TYPES staticlib)
 
-else ()
-    FetchContent_Declare(
-            revenant_collector_project
-            GIT_REPOSITORY https://github.com/EnityBlackHawk/revenant-collector.git
-            GIT_TAG master
-    )
-    FetchContent_MakeAvailable(revenant_collector_project)
-    corrosion_import_crate(
-            MANIFEST_PATH "${revenant_collector_project_SOURCE_DIR}/Cargo.toml"
-            CRATE_TYPES staticlib
-            DEPENDS revenant_collector_project
-    )
-endif ()
 
 add_library(${CMAKE_PROJECT_NAME} SHARED)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
@@ -51,21 +35,10 @@ target_sources(${CMAKE_PROJECT_NAME}
         BASE_DIRS include
         FILES
         include/revenant-collector.hpp
-        include/RVector.h
-        include/UserDataType.h
-        include/DumpConfigDesc.h
-        include/UserDataDesc.h
-        include/RVectorBase.h
 
         PRIVATE
         extern/revenant-external.h
-        extern/descriptors.h
         src/revenant-collector.cpp
-        src/RVectorBase.cpp
-        src/RVector.cpp
-        src/DumpConfigDesc.cpp
-        src/UserDataDesc.cpp
-        src/FFIExtractor.cpp
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
