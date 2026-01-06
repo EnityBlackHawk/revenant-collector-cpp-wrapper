@@ -35,10 +35,12 @@ target_sources(${CMAKE_PROJECT_NAME}
         BASE_DIRS include
         FILES
         include/revenant-collector.hpp
+        include/stackentry.h
 
         PRIVATE
         extern/revenant-external.h
         src/revenant-collector.cpp
+        src/stackentry.cpp
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)

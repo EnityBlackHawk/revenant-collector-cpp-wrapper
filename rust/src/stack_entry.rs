@@ -10,7 +10,6 @@ pub struct StackEntry {
     line : String,
 }
 
-
 impl StackEntry {
 
     pub fn new(name : String, file : String, line : String) -> StackEntry {
@@ -38,6 +37,16 @@ impl StackEntry {
         };
 
         StackEntry::new(name, file, line)
+    }
+
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn file(&self) -> &str {
+        &self.file
+    }
+    pub fn line(&self) -> &str {
+        &self.line
     }
 }
 

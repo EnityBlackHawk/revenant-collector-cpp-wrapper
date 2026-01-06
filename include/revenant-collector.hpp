@@ -1,4 +1,5 @@
 #pragma once
+#include <stackentry.h>
 #include <vector>
 
 namespace Revenant {
@@ -8,5 +9,5 @@ namespace Revenant {
     bool setupSignalHandlers(const std::vector<SigType>& sig);
     bool setupSignalHandler(const SigType& sig);
     void printStacktrace();
-
+    std::vector<StackEntry> getStacktrace();
 }

@@ -15,3 +15,9 @@ TEST(StackTrace, PrintStackTrace)
 {
     Func1();
 }
+
+TEST(StackTrace, GetStackTrace)
+{
+    auto stack = Revenant::getStacktrace();
+    EXPECT_FALSE(stack.empty());
+}
