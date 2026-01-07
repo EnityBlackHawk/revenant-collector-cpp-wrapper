@@ -13,9 +13,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Corrosion)
 
-
 corrosion_import_crate(MANIFEST_PATH "rust/Cargo.toml" CRATE_TYPES staticlib)
 
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
@@ -35,15 +38,20 @@ target_sources(${CMAKE_PROJECT_NAME}
         BASE_DIRS include
         FILES
         include/revenant-collector.hpp
-        include/stackentry.h
+        include/model/stackentry.h
 
         PRIVATE
         extern/revenant-external.h
+        private/service/snapshotservice.h
+        private/service/stacktraceservice.h
+
         src/revenant-collector.cpp
-        src/stackentry.cpp
+        src/model/stackentry.cpp
+        src/service/snapshotservice.cpp
+        src/service/stacktraceservice.cpp
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector nlohmann_json::nlohmann_json)
 
 if(REVENANT_ENABLE_TESTS)
     enable_testing()
