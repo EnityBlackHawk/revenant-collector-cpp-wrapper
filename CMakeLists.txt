@@ -39,6 +39,8 @@ target_sources(${CMAKE_PROJECT_NAME}
         FILES
         include/revenant-collector.hpp
         include/model/stackentry.h
+        include/model/snapshotconfigdesc.h
+        include/model/snapshotresult.h
 
         PRIVATE
         extern/revenant-external.h
@@ -49,6 +51,7 @@ target_sources(${CMAKE_PROJECT_NAME}
         src/model/stackentry.cpp
         src/service/snapshotservice.cpp
         src/service/stacktraceservice.cpp
+        src/model/snapshotresult.cpp
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector nlohmann_json::nlohmann_json)

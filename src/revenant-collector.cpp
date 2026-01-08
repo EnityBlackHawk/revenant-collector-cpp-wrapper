@@ -27,7 +27,7 @@ std::vector<Revenant::StackEntry> Revenant::getStacktrace()
     return StackTraceService().getStackTrace();
 }
 
-bool Revenant::takeSnapshot()
+SnapshotResult Revenant::takeSnapshot(const SnapshotConfigDesc& configDesc)
 {
-    return SnapshotService().takeSnapshot();
+    return SnapshotService(configDesc).takeSnapshot();
 }
