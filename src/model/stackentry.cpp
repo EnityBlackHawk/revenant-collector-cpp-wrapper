@@ -1,5 +1,5 @@
 
-#include "stackentry.h"
+#include "model/stackentry.h"
 namespace Revenant
 {
     struct StackEntry::Impl {

@@ -13,9 +13,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Corrosion)
 
-
 corrosion_import_crate(MANIFEST_PATH "rust/Cargo.toml" CRATE_TYPES staticlib)
 
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
@@ -28,22 +31,31 @@ target_include_directories(${CMAKE_PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
+file(GLOB_RECURSE REVENANT_COLLECTOR_PUBLIC_HEADERS CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/revenant-collector.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/model/*.h"
+)
+
+file(GLOB_RECURSE REVENANT_COLLECTOR_PRIVATE CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/private/**/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+
 target_sources(${CMAKE_PROJECT_NAME}
 
     PUBLIC
         FILE_SET HEADERS
         BASE_DIRS include
         FILES
-        include/revenant-collector.hpp
-        include/stackentry.h
+        ${REVENANT_COLLECTOR_PUBLIC_HEADERS}
 
         PRIVATE
-        extern/revenant-external.h
-        src/revenant-collector.cpp
-        src/stackentry.cpp
+        ${REVENANT_COLLECTOR_PRIVATE}
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector nlohmann_json::nlohmann_json)
 
 if(REVENANT_ENABLE_TESTS)
     enable_testing()

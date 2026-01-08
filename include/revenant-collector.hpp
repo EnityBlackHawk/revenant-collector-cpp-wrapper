@@ -1,6 +1,9 @@
 #pragma once
-#include <stackentry.h>
 #include <vector>
+
+#include "model/stackentry.h"
+#include "model/snapshotconfigdesc.h"
+#include "model/snapshotresult.h"
 
 namespace Revenant {
 
@@ -10,4 +13,5 @@ namespace Revenant {
     bool setupSignalHandler(const SigType& sig);
     void printStacktrace();
     std::vector<StackEntry> getStacktrace();
+    SnapshotResult takeSnapshot(const SnapshotConfigDesc& configDesc);
 }
