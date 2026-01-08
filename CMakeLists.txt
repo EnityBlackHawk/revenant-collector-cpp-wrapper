@@ -31,27 +31,28 @@ target_include_directories(${CMAKE_PROJECT_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
+file(GLOB_RECURSE REVENANT_COLLECTOR_PUBLIC_HEADERS CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/revenant-collector.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/model/*.h"
+)
+
+file(GLOB_RECURSE REVENANT_COLLECTOR_PRIVATE CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/extern/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/private/**/*.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+
 target_sources(${CMAKE_PROJECT_NAME}
 
     PUBLIC
         FILE_SET HEADERS
         BASE_DIRS include
         FILES
-        include/revenant-collector.hpp
-        include/model/stackentry.h
-        include/model/snapshotconfigdesc.h
-        include/model/snapshotresult.h
+        ${REVENANT_COLLECTOR_PUBLIC_HEADERS}
 
         PRIVATE
-        extern/revenant-external.h
-        private/service/snapshotservice.h
-        private/service/stacktraceservice.h
-
-        src/revenant-collector.cpp
-        src/model/stackentry.cpp
-        src/service/snapshotservice.cpp
-        src/service/stacktraceservice.cpp
-        src/model/snapshotresult.cpp
+        ${REVENANT_COLLECTOR_PRIVATE}
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/private")
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE revenant_collector nlohmann_json::nlohmann_json)
