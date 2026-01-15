@@ -5,6 +5,8 @@ option(REVENANT_ENABLE_TESTS "Enable tests for RevenantCollectorCpp" OFF)
 
 project(RevenantCollectorCpp)
 
+include(RevenantCollectorCppMacros.cmake)
+
 include(FetchContent)
 FetchContent_Declare(
         Corrosion
@@ -76,6 +78,10 @@ install(TARGETS RevenantCollectorCpp
         EXPORT RevenantCollectorCppTargets
         FILE_SET HEADERS
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/revenant
+)
+install(
+        FILES RevenantCollectorCppMacros.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/RevenantCollectorCpp
 )
 install(EXPORT RevenantCollectorCppTargets
         FILE RevenantCollectorCppConfig.cmake
