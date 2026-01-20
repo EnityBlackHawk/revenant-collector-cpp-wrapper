@@ -3,6 +3,8 @@
 #include "model/snapshotconfigdesc.h"
 #include "model/snapshotresult.h"
 
+using namespace Revenant;
+
 class SnapshotService
 {
 
