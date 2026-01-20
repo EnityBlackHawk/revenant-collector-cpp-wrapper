@@ -4,6 +4,8 @@
 #include <chrono>
 #include <fstream>
 
+#include "model/snapshotjson.h"
+
 using json = nlohmann::json;
 using namespace Revenant;
 
@@ -16,19 +18,6 @@ SnapshotResult SnapshotService::takeSnapshot() const
     std::vector<StackEntry> stackTrace = _stackTraceService.getStackTrace();
     std::string fileName = generateSnapshotFileName();
 
-    json snapshot;
-    auto arr = json::array({});
-    for (const auto& entry : stackTrace)
-    {
-        json jEntry;
-        jEntry["name"] = entry.name();
-        jEntry["file"] = entry.file();
-        jEntry["line"] = entry.line();
-        arr.push_back(jEntry);
-    }
-
-    snapshot["stack_trace"] = std::move(arr);
-
     std::ofstream file(fileName);
 
     if (!file.is_open())
@@ -36,7 +25,7 @@ SnapshotResult SnapshotService::takeSnapshot() const
         return {false, std::move(fileName)};
     }
 
-    file << snapshot.dump();
+    file << SnapshotJson(stackTrace).toDump();
     file.close();
 
     return {true, std::move(fileName)};

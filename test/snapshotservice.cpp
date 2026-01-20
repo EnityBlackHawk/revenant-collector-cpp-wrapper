@@ -22,8 +22,4 @@ TEST(SnapshotService, TakeSnapshot)
     {
         FAIL() << "Snapshot creation failed, file path: " << result.filePath();
     }
-
-
-
-
 }
