@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <chrono>
 #include <fstream>
+#include <service/userdataservice.h>
 
 #include "model/snapshotjson.h"
 
@@ -25,11 +26,12 @@ SnapshotResult SnapshotService::takeSnapshot() const
         return {false, std::move(fileName)};
     }
 
-    file << SnapshotJson(stackTrace).toDump();
+    const std::vector<UserDataValue> userValues = UserDataService(_configDesc.userData).process();
+
+    file << SnapshotJson(stackTrace, userValues).toDump();
     file.close();
 
     return {true, std::move(fileName)};
-
 
 }
 

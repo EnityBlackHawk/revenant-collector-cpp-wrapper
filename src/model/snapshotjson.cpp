@@ -5,10 +5,13 @@
 struct SnapshotJson::Impl
 {
     std::vector<Revenant::StackEntry> entries;
+    std::vector<UserDataValue> userData;
 };
 
-SnapshotJson::SnapshotJson(const std::vector<Revenant::StackEntry>& stackEntries) : _impl(std::make_unique<Impl>(stackEntries))
-{}
+SnapshotJson::SnapshotJson(const std::vector<Revenant::StackEntry>& stackEntries,
+    const std::vector<UserDataValue>& userData) : _impl(std::make_unique<Impl>(stackEntries, userData))
+{
+}
 
 SnapshotJson::~SnapshotJson() = default;
 
@@ -26,6 +29,13 @@ JsonType SnapshotJson::toJson() const
     }
 
     snapshot["stack_trace"] = std::move(arr);
+
+    JsonType& userDataObj = snapshot["user_data"];
+
+    for (const auto& userData : _impl->userData)
+    {
+        userDataObj[userData.name()] = userData.toJson();
+    }
 
     return snapshot;
 }

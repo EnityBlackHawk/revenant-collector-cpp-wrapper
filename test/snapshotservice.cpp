@@ -9,6 +9,7 @@ TEST(SnapshotService, TakeSnapshot)
 {
 
     SnapshotConfigDesc configDesc = {};
+    configDesc.userData = { {"name", UserDataTypeEnum::STRING, []{return "NICE";}}} ;
 
     const SnapshotService snapshotService(configDesc);
     SnapshotResult result = snapshotService.takeSnapshot();
