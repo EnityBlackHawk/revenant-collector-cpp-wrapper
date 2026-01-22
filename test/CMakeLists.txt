@@ -10,11 +10,13 @@ add_executable("${CMAKE_PROJECT_NAME}-test"
         stacktrace.cpp
         stackentry.cpp
         snapshotservice.cpp
+        userdataservice.cpp
 )
 
 target_link_libraries("${CMAKE_PROJECT_NAME}-test"
     PRIVATE
         GTest::gtest_main
+        nlohmann_json::nlohmann_json
         ${CMAKE_PROJECT_NAME}
 )
 
